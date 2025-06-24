@@ -78,7 +78,7 @@ boundplusminus_extra = 6;
 %%%%%%%%%%%%%%%%%%%%%%%%%LOAD IMAGE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
- 
+
 folder = uigetdir(pwd, 'Select folder with .tif images');
 if isnumeric(folder)
     error('No folder selected');
@@ -118,6 +118,7 @@ end
 
 disp('Done with all images.');
 return  % prevent any stray code from running again
+
  
  
 % crop image to 50 % air and 50 % edge 
@@ -569,4 +570,10 @@ References:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 %}
+ 
+ 
+ 
+ 
+ 
+ 
  
