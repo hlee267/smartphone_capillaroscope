@@ -1,6 +1,7 @@
 import os
 import rawpy
 from skimage import io
+import numpy as np
 
 def main():
     # Prompt the user for the root directory to search
@@ -15,12 +16,14 @@ def main():
         for fname in files:
             if fname.lower().endswith('.dng'):
                 images.append(os.path.join(root, fname))
+                print(fname)
 
     if not images:
         print("No DNG files found in any 'images*' folders under:", root_dir)
         return
 
     for image in images:
+        print("Trying to open:", image)
         with rawpy.imread(image) as raw:
             rgb = raw.postprocess(gamma=(1,1), 
                                   use_camera_wb=True, 
@@ -32,6 +35,7 @@ def main():
             io.imsave((image[0:-4]+'.tif'), rgb)
 
     print(f"\nConversion complete. Processed {len(images)} file(s).")
+    
 
 if __name__ == "__main__":
     main()
