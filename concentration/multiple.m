@@ -1,22 +1,20 @@
-img_tiff = "wide/C2-capillaries_green.tif";
-
+img_tiff = "_images/C2-20250829_001448.tif";
 t = Tiff(img_tiff, 'r');
 img = read(t);
 t.close();
 
-cropped_img = img(2500:3500, 3000:4500);
-single_cap = cropped_img(480:800, 420:530);
+single_cap = img(7000:8500, 10000:10250);
 
 figure;
 imshow(single_cap, []);
 hold on;
 
-x_1 = [40, 65];
-y_1 = [55, 55];
+x_1 = [60, 105];
+y_1 = [330, 330];
 
 num_lines = 20;                     % ~20 profiles
-y_min     = 50;                     % lowest row to sample (inclusive)
-y_max     = 60;                     % highest row to sample (inclusive)
+y_min     = 320;                     % lowest row to sample (inclusive)
+y_max     = 340;                     % highest row to sample (inclusive)
 
 H = size(single_cap, 1);
 y_min = max(1, y_min);
@@ -78,8 +76,6 @@ xlabel('Distance (\mum)'); ylabel('Intensity');
 title('Intensity profiles (individual + mean)');
 legend('show','Location','best'); legend boxoff
 
-% 
-% show mean ± 1 standard deviation band
 figure; hold on; grid on; box on;
 fill([dist_um, fliplr(dist_um)], ...
      [prof_mean+prof_std, fliplr(prof_mean-prof_std)], ...
@@ -89,14 +85,16 @@ xlabel('Distance (\mum)'); ylabel('Intensity');
 title('Average intensity profile (mean \pm 1 SD)');
 set(gca,'Layer','top');
 
-% -------- save to CSVs --------
 T_wide = array2table([dist_um(:), profiles.'], ...
                      'VariableNames', ['Dist_um', compose('Line_%02d',1:num_lines)]);
 T_wide.Mean = prof_mean(:);
 T_wide.Std  = prof_std(:);
-writetable(T_wide, 'intensity_profiles_wide.csv');
 
-% Mean-only table
-T_mean = table((1:N).', dist_px(:), dist_um(:), prof_mean(:), prof_std(:), ...
+T_mean = table((1:N).', dist_px(:), dist_um(:), ...
+               prof_mean(:), prof_std(:), ...
     'VariableNames', {'Sample','Dist_px','Dist_um','MeanIntensity','StdIntensity'});
+
+writetable(T_wide, 'intensity_profiles_wide.csv');
 writetable(T_mean, 'intensity_profile_mean.csv');
+
+

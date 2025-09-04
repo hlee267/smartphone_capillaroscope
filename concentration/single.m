@@ -1,30 +1,30 @@
-img_tiff = "wide/C2-capillaries_green.tif";
+img_tiff = "_images/C2-20250829_001448.tif";
 
 t = Tiff(img_tiff, 'r');
 img = read(t);
 t.close();
 
+figure;
+imshow(img);
+hold on;
+
+% cropped_img = img(7000:8500, 10000:10250);
+single_cap = img(7000:8500, 10000:10250);
+
+figure;
+imshow(single_cap);
+hold on;
+
+% single_cap_1 = cropped_img(480:800, 420:530);
 % figure;
-% imshow(img);
+% imshow(single_cap_1);
 % hold on;
 
-cropped_img = img(2500:3500, 3000:4500);
-single_cap = cropped_img(560:1000, 900:1025);
-
-figure;
-imshow(cropped_img);
-hold on;
-
-single_cap_1 = cropped_img(480:800, 420:530);
-figure;
-imshow(single_cap_1);
-hold on;
-
-x_1 = [40, 65];
-y_1 = [55, 55];
+x_1 = [60, 105];
+y_1 = [330, 330];
 
 N = round(hypot(diff(x_1), diff(y_1))) + 1;           % samples ~ length in px
-[line_x, line_y, intensity_profile] = improfile(single_cap_1, x_1, y_1, N, 'bilinear');
+[line_x, line_y, intensity_profile] = improfile(single_cap, x_1, y_1, N, 'bilinear');
 
 figure;
 plot(intensity_profile);
@@ -34,7 +34,7 @@ title('Intensity Profile along Line');
 grid on;
 
 figure; 
-imshow(single_cap_1, []); 
+imshow(single_cap, []); 
 hold on;
 plot(x_1, y_1, 'r-', 'LineWidth', 1.5);
 title('Single Capillary with Profile Line');
