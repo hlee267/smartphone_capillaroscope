@@ -1,4 +1,4 @@
-data = readtable('intensity_profile_mean.csv');
+data = readtable('intensity_profile_mean_new.csv');
 
 x  = data.Dist_um;
 y  = data.MeanIntensity;

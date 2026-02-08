@@ -4,7 +4,6 @@ from ij import gui
 from ij import plugin
 from ij.measure import ResultsTable
 from ij import process
-from ij.plugin import ChannelSplitter
 import os
 import csv
 import time
@@ -15,18 +14,14 @@ import sys
 imp = IJ.getImage()
 title = imp.getTitle()
 
-# use only the green channel
-channels = ChannelSplitter.split(imp)
-green = channels[1]
-
-ic = process.ImageConverter(green)
+ic = process.ImageConverter(imp)
 ic.convertToGray32()
-imp2 = green.duplicate()
+imp2 = imp.duplicate()
 
-IJ.run(imp2, "Gaussian Blur...", "sigma=50")
+IJ.run(imp2, "Gaussian Blur...", "sigma=30")
 
-imp3 = plugin.ImageCalculator.run(green, imp2, "Divide create 32-bit")
-green.close()
+imp3 = plugin.ImageCalculator.run(imp, imp2, "Divide create 32-bit")
+imp.close()
 imp2.close()
 imp3.show()
 ntitle = title.split('.')[0]+'_BS.tif'

@@ -99,7 +99,8 @@ def main():
     iso   = VControl("ISO",     ISO_TOGGLE_XY,  ISO_TRACK_XY,  ISO_STEPS,   "positive=higher ISO (flip if opposite)")
     wb    = VControl("WB",      WB_TOGGLE_XY,   WB_TRACK_XY,   WB_STEPS,    "positive=warmer (flip if opposite)")
 
-    controls = [focus, shut, iso, wb]
+    # controls = [focus, shut, iso, wb]
+    controls = [focus]
 
     print("Sweep mode:", SWEEP_MODE)
     for c in controls:
